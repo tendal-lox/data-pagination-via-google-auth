@@ -21,3 +21,8 @@ module.exports.insertRecordMembers = async (userId, id, title, body) => {
     if (!await dataModel.exists({id: id}))
         await dataModel.create({userId: userId, id: id, title: title, body: body}).save()
 }
+
+module.exports.findSortedData = async (page, limit) => {
+    const startIndex = (page - 1) * limit
+    return await dataModel.find().sort({'id': 1}).skip(startIndex).limit(limit)
+}
